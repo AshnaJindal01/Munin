@@ -1,0 +1,7 @@
+Follow the below steps to install Munin-master:
+===============================================
+
+Once the Munin package pre-requisites are met , we should follow below steps to install Munin master in RHEL :
+
+1. sudo yum install munin
+2. Go t /etc/munin/munin.conf and make required changes in munin.conf file.
