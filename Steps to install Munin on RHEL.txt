@@ -1,1 +1,74 @@
+Steps to install Munin on RHEL: 
+===============================
+
+We need to add following repos in YUM so that the dependencies for Munin are satisfied.
+
+Dependencies are like below packages which need to be fetched from other repos in case RHN doesnot have these packages: 
+1.Package: munin-2.0.25-11.el6.noarch (epel)
+           Requires: perl(File::Copy::Recursive)
+2.Package: perl-Log-Dispatch-2.27-1.el6.noarch (epel)
+           Requires: perl(MIME::Lite)
+3.Package: munin-2.0.25-11.el6.noarch (epel)
+           Requires: perl(RRDs)
+4.Package: munin-2.0.25-11.el6.noarch (epel)
+           Requires: perl(Taint::Runtime)
+5.Package: perl-Log-Log4perl-1.30-1.el6.noarch (epel)
+           Requires: perl(RRDs)
+
+To fulfilling the above requirements , in case we see that munin installation needs these packages, please follow the steps as below :
+
+1. For installing perl(File::Copy::Recursive) from different repository on internet.
+=======================================================================================
+-->cd /etc/yum.repos.d/
+-->wget http://download.opensuse.org/repositories/home:poigru:Perl-RHEL6/RedHat_RHEL-6/home:poigru:Perl-RHEL6.repo
+-->yum install perl-File-Copy-Recursive
+
+2. For installing perl(RRDs) Packages:
+==========================================
+-->cd /etc/yum.repos.d/
+-->$ sudo yum-config-manager --add-repo http://ftp.riken.jp/Linux/dag/redhat/el6/en/x86_64/extras/RPMS/
+--> ls -ltr /etc/yum.repos.d/
+
+-rw-r--r--  1 root      root         209 Sep 21 19:25 ftp.riken.jp_Linux_dag_redhat_el6_en_x86_64_extras_.repo
+
+[ftp.riken.jp_Linux_dag_redhat_el6_en_x86_64_extras_]
+name=added from: http://ftp.riken.jp/Linux/dag/redhat/el6/en/x86_64/extras/
+baseurl=http://ftp.riken.jp/Linux/dag/redhat/el6/en/x86_64/extras/
+enabled=1
+
+
+3. For installing perl(MIME::Lite), perl(Taint::Runtime) and other PERL related extra packages:
+===============================================================================================
+-->cd /etc/yum.repos.d/
+-->$ sudo yum-config-manager --add-repo http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/
+--> ls -ltr /etc/yum.repos.d/
+
+-rw-r--r--  1 root      root         176 Sep 21 22:40 ftp.riken.jp_Linux_fedora_epel_6_x86_64_.repo
+
+[ftp.riken.jp_Linux_fedora_epel_6_x86_64_]
+name=added from: http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/
+baseurl=http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/
+enabled=1
+
+
+4. For installing perl-Email-Date-Format package :
+====================================================
+wget http://ftp.riken.jp/Linux/dag/redhat/el6/en/x86_64/extras/RPMS/perl-Email-Date-Format-1.002-1.el6.rfx.noarch.rpm
+$ sudo yum install perl-Email-Date-Format-1.002-1.el6.rfx.noarch.rpm
+
+
+5. For installing perl-MIME-Lite package :
+=============================================
+wget http://ftp.riken.jp/Linux/dag/redhat/el6/en/x86_64/extras/RPMS/perl-MIME-Lite-3.029-1.el6.rfx.noarch.rpm
+sudo yum install perl-MIME-Lite-3.029-1.el6.rfx.noarch.rpm
+
+
+ADDING GPG KEYS:
+===================
+For above installations to go smooth , we need to add GPG key so that RHEL can recognize and authenticate the use of these packages from these specific mirrors as mentioned above:
+
+rpm -qa gpg-pubkey*
+
+
+sudo rpm --import http://ftp.riken.jp/Linux/dag/RPM-GPG-KEY.dag.txt
 
